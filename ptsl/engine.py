@@ -950,13 +950,14 @@ class Engine:
 
         return (op.response.in_time, op.response.out_time)
 
-    def get_system_delay(self) -> int:
+    def get_system_delay_info(self) -> Tuple[int, bool]:
         """
-        Get the current system delay.
+        Retrieves the system delay information from the current session.
 
-        :returns: the delay in samples.
+        Returns:
+            Tuple[int, bool]: A tuple containing the system delay measured in samples,
+                            and a boolean indicating if delay compensation is enabled.
         """
         op = ops.GetSessionSystemDelayInfo()
         self.client.run(op)
-
-        return op.response.samples
+        return (op.response.samples, op.response.delay_compensation_enabled)
